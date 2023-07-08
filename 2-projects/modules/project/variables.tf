@@ -69,5 +69,5 @@ variable "bigdata" {
 
 variable "folder_id" {
   description = "The folder ID for the project"
-  type = string
+  type        = string
 }
