@@ -23,7 +23,7 @@ tf_plan:
     - TF_CACHE_PATH="$HOME/.terraform.d/plugin-cache"
     - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
     - mkdir -p $TF_CACHE_PATH
-    - apk update && apk add curl jq
+    - cd ./2-projects
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - terraform init
     - terraform plan
