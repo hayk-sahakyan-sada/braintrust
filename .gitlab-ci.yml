@@ -10,7 +10,7 @@ stages:
     - destroy
 
 tf_fmt:
-    stage: plam
+    stage: plan
     script:
         - TF_CACHE_PATH="$HOME/.terraform.d/plugin-cache"
         - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
