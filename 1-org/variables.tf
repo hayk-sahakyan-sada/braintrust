@@ -16,7 +16,7 @@ variable "root-project-id" {
 variable "sa_role_list" {
   description = "Service account roles on the folder level"
   type        = list(string)
-  default = [ 
+  default = [
     "roles/browser",
-    ]
+  ]
 }

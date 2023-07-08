@@ -5,8 +5,8 @@ resource "google_service_account" "terraform-env-sa" {
 }
 
 resource "google_folder_iam_member" "folder_parent_iam" {
-  count   = length(var.sa_role_list)
-  role    = var.sa_role_list[count.index]
+  count  = length(var.sa_role_list)
+  role   = var.sa_role_list[count.index]
   folder = google_folder.root-folder.id
   member = "serviceAccount:${google_service_account.terraform-env-sa.email}"
 }
