@@ -16,6 +16,10 @@ tf_fmt:
         - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
         - mkdir -p $TF_CACHE_PATH
         - terraform fmt -recursive
+        - echo "JIRA=111" >> build.env
+    artifacts:
+    reports:
+      dotenv: build.env
 
 tf_plan:
   stage: plan
@@ -25,8 +29,14 @@ tf_plan:
     - mkdir -p $TF_CACHE_PATH
     - cd ./2-projects
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
-    - terraform init
-    - terraform plan
+    - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
+    - terraform plan -out tf.plan
+  needs:
+    - job: tf_fmt
+      artifacts: true
+  artifacts:
+    paths:
+      - 2-projects/tf.plan
 
 tf_apply:
   stage: apply
@@ -36,8 +46,11 @@ tf_apply:
     - mkdir -p $TF_CACHE_PATH
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - cd ./2-projects
-    - terraform init
+    - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
     - terraform apply -auto-approve
+  needs:
+    - job: tf_fmt
+      artifacts: true
   when: manual
 
 tf_destroy:
@@ -48,6 +61,9 @@ tf_destroy:
     - mkdir -p $TF_CACHE_PATH
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - cd ./2-projects
-    - terraform init
+    - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
     - terraform destroy -auto-approve
+  needs:
+    - job: tf_fmt
+      artifacts: true
   when: manual
