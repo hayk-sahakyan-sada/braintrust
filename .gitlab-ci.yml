@@ -7,7 +7,7 @@ image:
 stages:
     - tf_fmt
     - tf_plan
-    # - tf_apply
+    - tf_apply
 
 tf_fmt:
     stage: tf_fmt
