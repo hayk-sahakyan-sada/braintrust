@@ -18,6 +18,17 @@ variable "sa_role_list" {
   type        = list(string)
   default = [
     "roles/browser",
-    "roles/storage.objectAdmin"
+    "roles/storage.objectAdmin",
+    "roles/billing.user",
+    "roles/resourcemanager.projectCreator"
+  ]
+}
+
+variable "apiList" {
+  description = "list of necessary APIs"
+  type        = list(string)
+  default = [
+    "cloudbilling.googleapis.com",
+    "serviceusage.googleapis.com"
   ]
 }

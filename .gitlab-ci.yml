@@ -5,12 +5,12 @@ image:
     - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
  
 stages:
-    - tf_fmt
-    - tf_plan
-    - tf_apply
+    - plan
+    - apply
+    - destroy
 
 tf_fmt:
-    stage: tf_fmt
+    stage: plam
     script:
         - TF_CACHE_PATH="$HOME/.terraform.d/plugin-cache"
         - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
@@ -18,7 +18,7 @@ tf_fmt:
         - terraform fmt -recursive
 
 tf_plan:
-  stage: tf_plan
+  stage: plan
   script:
     - TF_CACHE_PATH="$HOME/.terraform.d/plugin-cache"
     - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
@@ -29,7 +29,7 @@ tf_plan:
     - terraform plan
 
 tf_apply:
-  stage: tf_apply
+  stage: apply
   script:
     - TF_CACHE_PATH="$HOME/.terraform.d/plugin-cache"
     - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
@@ -40,3 +40,14 @@ tf_apply:
     - terraform apply -auto-approve
   when: manual
 
+tf_destroy:
+  stage: destroy
+  script:
+    - TF_CACHE_PATH="$HOME/.terraform.d/plugin-cache"
+    - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
+    - mkdir -p $TF_CACHE_PATH
+    - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
+    - cd ./2-projects
+    - terraform init
+    - terraform destroy -auto-approve
+  when: manual
