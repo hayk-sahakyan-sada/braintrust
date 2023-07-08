@@ -1,0 +1,11 @@
+project_name        = "firstest"
+activate_apis       = []
+requestor           = "hayk"
+team                = "managment"
+supervisor          = "manager"
+env                 = "dev"
+workspace           = false
+bigdata             = false
+compute             = false
+sa_creation         = false
+remote_state_bucket = "brain-trust-state"
