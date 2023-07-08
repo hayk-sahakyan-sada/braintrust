@@ -28,27 +28,15 @@ tf_plan:
     - terraform init
     - terraform plan
 
- 
-
-# tf_apply:
-#   stage: tf_apply
-#   script:
-#     - TF_CACHE_PATH="$HOME/.terraform.d/plugin-cache"
-#     - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
-#     - mkdir -p $TF_CACHE_PATH
-#     - apk update && apk add curl jq
-#     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
-#     - cat current.json
-#     - export TF_VAR_env=$(cat current.json | jq -r .Environment)
-#     - export TF_VAR_label_cost_type=$(cat current.json | jq -r '."URL of a completed GCP Calculator"')
-#     - export TF_VAR_jira_id=$(cat current.json | jq -r '."Jira ID"')
-#     - export TF_VAR_business_unit=$(cat current.json | jq -r '."Business Unit"')
-#     - SA=$(cat current.json | jq -r '."Will you need a Service Account?"')
-#     - export TF_VAR_create_service_account=$(if [[ $SA == "Y" ]];then echo "true";else echo "false"; fi)
-#     - printenv | grep TF_VAR
-#     # - terraform init -backend-config="prefix=terraform/state/"
-#     - terraform init -backend-config="prefix=terraform/state/${TF_VAR_business_unit}-${TF_VAR_jira_id}"
-#     - terraform get
-#     - terraform apply -auto-approve -no-color | tee tfapply.out
-#   when: manual
+tf_apply:
+  stage: tf_apply
+  script:
+    - TF_CACHE_PATH="$HOME/.terraform.d/plugin-cache"
+    - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
+    - mkdir -p $TF_CACHE_PATH
+    - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
+    - cd ./2-projects
+    - terraform init
+    - terraform apply -auto-approve
+  when: manual
 
