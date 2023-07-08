@@ -18,8 +18,8 @@ tf_fmt:
         - terraform fmt -recursive
         - echo "JIRA=111" >> build.env
     artifacts:
-    reports:
-      dotenv: build.env
+      reports:
+        dotenv: build.env
 
 tf_plan:
   stage: plan
