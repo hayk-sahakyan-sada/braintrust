@@ -18,5 +18,6 @@ variable "sa_role_list" {
   type        = list(string)
   default = [
     "roles/browser",
+    "roles/storage.objectAdmin"
   ]
 }

@@ -4,9 +4,9 @@ resource "google_service_account" "terraform-env-sa" {
   display_name = "Foundation Projects SA. Managed by Terraform, for BrainTrust"
 }
 
-resource "google_folder_iam_member" "folder_parent_iam" {
+resource "google_organization_iam_member" "org_parent_iam" {
   count  = length(var.sa_role_list)
   role   = var.sa_role_list[count.index]
-  folder = google_folder.root-folder.id
+  org_id = var.org_id
   member = "serviceAccount:${google_service_account.terraform-env-sa.email}"
 }
