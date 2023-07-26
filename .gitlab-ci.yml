@@ -89,7 +89,7 @@ tf_destroy:
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - cd ./2-projects
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
-    - terraform destroy -auto-approve
+    - terraform destroy -var-file="../terraform.tfvars" -auto-approve
   needs:
     - job: gcs_get
       artifacts: true
