@@ -64,6 +64,8 @@ tf_apply:
   needs:
     - job: gcs_get
       artifacts: true
+    - job: tf_plan
+      artifacts: true
   when: manual
 
 tf_destroy:
