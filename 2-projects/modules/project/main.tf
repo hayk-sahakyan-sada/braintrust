@@ -13,7 +13,7 @@ module "project-factory" {
   labels = {
     requestor   = var.requestor
     team        = var.team
-    supervisor  = var.supervisor
+    supervisor  = replace(var.supervisor, "@sada.com", "-sada")
     environment = var.environment
     workspace   = var.workspace
     bigdata     = var.bigdata
