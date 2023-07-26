@@ -60,7 +60,7 @@ tf_apply:
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - cd ./2-projects
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
-    - terraform apply -auto-approve
+    - terraform apply ../tf.plan -auto-approve 
   needs:
     - job: gcs_get
       artifacts: true
