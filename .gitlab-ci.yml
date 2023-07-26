@@ -5,9 +5,18 @@ image:
     - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
  
 stages:
+    - download
     - plan
     - apply
     - destroy
+
+gcs_get:
+    image: google/cloud-sdk:alpine
+    stage: download
+    script:
+        - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+        - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+        - gcloud storage ls gs://brain-trust-state/jira_keys
 
 tf_fmt:
     stage: plan
