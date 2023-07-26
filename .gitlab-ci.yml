@@ -43,7 +43,7 @@ tf_plan:
     - cd ./2-projects
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
-    - terraform plan -var-file="$HOME/terraform.tfvars" -out tf.plan 
+    - terraform plan -var-file="../terraform.tfvars" -out tf.plan 
   needs:
     - job: gcs_get
       artifacts: true
