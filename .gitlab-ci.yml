@@ -74,7 +74,7 @@ gcs_rm:
     script:
         - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
         - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-        - gsutil rm gs://brain-trust-state/terraform_vars/jira_keys/$JIRA
+        - gsutil rm gs://brain-trust-state/jira_keys/$JIRA
     needs:
     - job: gcs_get
       artifacts: true
