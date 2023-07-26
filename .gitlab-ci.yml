@@ -68,6 +68,18 @@ tf_apply:
       artifacts: true
   when: manual
 
+gcs_rm:
+    image: google/cloud-sdk:alpine
+    stage: apply
+    script:
+        - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+        - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+        - gsutil rm gs://brain-trust-state/terraform_vars/jira_keys/$JIRA
+    needs:
+    - job: gcs_get
+      artifacts: true
+    - job: tf_apply
+
 tf_destroy:
   stage: destroy
   script:
@@ -77,7 +89,7 @@ tf_destroy:
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - cd ./2-projects
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
-    - terraform destroy -auto-approve tf.plan 
+    - terraform destroy -auto-approve
   needs:
     - job: gcs_get
       artifacts: true
