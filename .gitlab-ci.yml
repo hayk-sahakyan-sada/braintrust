@@ -17,7 +17,7 @@ gcs_get:
         - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
         - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
         - JIRA=`gcloud storage ls gs://brain-trust-state/jira_keys | tail -n 1 | awk -F "/" '{print $NF}'`
-        - glcoud storage cp gs://brain-trust-state/terraform_vars/$JIRA/terraform.tfvars
+        - gcloud storage cp gs://brain-trust-state/terraform_vars/$JIRA/terraform.tfvars
         - echo "JIRA=$JIRA" >> build.env
     artifacts:
       reports:
