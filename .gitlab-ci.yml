@@ -33,10 +33,6 @@ tf_fmt:
         - export TF_PLUGIN_CACHE_DIR=$TF_CACHE_PATH
         - mkdir -p $TF_CACHE_PATH
         - terraform fmt -recursive
-        - echo "JIRA=111" >> build.env
-    artifacts:
-      reports:
-        dotenv: build.env
 
 tf_plan:
   stage: plan
@@ -49,7 +45,7 @@ tf_plan:
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
     - terraform plan -out tf.plan
   needs:
-    - job: tf_fmt
+    - job: gcs_get
       artifacts: true
   artifacts:
     paths:
@@ -66,7 +62,7 @@ tf_apply:
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
     - terraform apply -auto-approve
   needs:
-    - job: tf_fmt
+    - job: gcs_get
       artifacts: true
   when: manual
 
@@ -81,6 +77,6 @@ tf_destroy:
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
     - terraform destroy -auto-approve
   needs:
-    - job: tf_fmt
+    - job: gcs_get
       artifacts: true
   when: manual
