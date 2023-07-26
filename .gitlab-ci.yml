@@ -60,7 +60,7 @@ tf_apply:
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - cd ./2-projects
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
-    - terraform apply ../tf.plan -auto-approve 
+    - terraform apply -auto-approve ../tf.plan 
   needs:
     - job: gcs_get
       artifacts: true
@@ -77,8 +77,10 @@ tf_destroy:
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - cd ./2-projects
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
-    - terraform destroy -auto-approve
+    - terraform destroy -auto-approve ../tf.plan 
   needs:
     - job: gcs_get
+      artifacts: true
+    - job: tf_plan
       artifacts: true
   when: manual
