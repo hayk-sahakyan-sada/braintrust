@@ -79,6 +79,7 @@ gcs_rm:
     - job: gcs_get
       artifacts: true
     - job: tf_apply
+      when: on_success
 
 tf_destroy:
   stage: destroy
