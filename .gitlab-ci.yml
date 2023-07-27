@@ -61,12 +61,13 @@ tf_apply:
   when: manual
 
 gcs_rm:
-    image: google/cloud-sdk:alpine
-    stage: apply
-    script:
-        - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
-        - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-        - gsutil rm gs://brain-trust-state/jira_keys/$JIRA
+  image: google/cloud-sdk:alpine
+  stage: apply
+  script:
+      - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+      - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+      - gsutil rm gs://brain-trust-state/jira_keys/$JIRA
+  when: manual
 
 tf_destroy:
   stage: destroy
