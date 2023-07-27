@@ -44,9 +44,6 @@ tf_plan:
     - export GOOGLE_APPLICATION_CREDENTIALS="${GCPCREDS}"
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
     - terraform plan -var-file="../terraform.tfvars" -out tf.plan 
-  needs:
-    - job: gcs_get
-      artifacts: true
   artifacts:
     paths:
       - 2-projects/tf.plan
@@ -61,11 +58,6 @@ tf_apply:
     - cd ./2-projects
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
     - terraform apply -auto-approve tf.plan 
-  needs:
-    - job: gcs_get
-      artifacts: true
-    - job: tf_plan
-      artifacts: true
   when: manual
 
 gcs_rm:
@@ -75,11 +67,6 @@ gcs_rm:
         - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
         - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
         - gsutil rm gs://brain-trust-state/jira_keys/$JIRA
-    needs:
-    - job: gcs_get
-      artifacts: true
-    - job: tf_apply
-      when: on_success
 
 tf_destroy:
   stage: destroy
@@ -91,9 +78,4 @@ tf_destroy:
     - cd ./2-projects
     - terraform init -backend-config="prefix=terraform/projects/${JIRA}"
     - terraform destroy -var-file="../terraform.tfvars" -auto-approve
-  needs:
-    - job: gcs_get
-      artifacts: true
-    - job: tf_plan
-      artifacts: true
   when: manual
