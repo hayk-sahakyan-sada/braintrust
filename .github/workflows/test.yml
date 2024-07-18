@@ -28,10 +28,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
-      - run: wget https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.2/cloud-sql-proxy.linux.amd64 -O cloud-sql-proxy
-      - run: chmod +x cloud-sql-proxy
-      - run: ./cloud-sql-proxy --private-ip hpoll-quest-qb-dev:us-central1:hqb-dev
-      - run: echo Hello, world2!
+      - run: psql postgresql://postgres:'5:q)m9bK/^EQG_uV'@10.17.252.30:5432/questbrand -c 'select count(*) from information_schema.tables;' >> workflowoutput.txt
+      - run: cat workflowoutput.txt
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
