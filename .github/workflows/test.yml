@@ -28,9 +28,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
-      - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client
-      - run: sudo apt-get install wget
+      - run: apt-get update
+      - run: apt-get install postgresql-client
+      - run: apt-get install wget
       - run: wget https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.2/cloud-sql-proxy.linux.amd64 -O cloud-sql-proxy
       - run: chmod +x cloud-sql-proxy
       - run: ./cloud-sql-proxy --private-ip hpoll-quest-qb-dev:us-central1:hqb-dev
