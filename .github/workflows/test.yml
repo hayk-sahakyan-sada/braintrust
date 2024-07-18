@@ -19,7 +19,7 @@ env:
   PGUSER: postgres
   PGDATABASE: questbrand
   PGPORT: 5432
-  POSTGRES_PASSWORD: 5:q)m9bK/^EQG_uV
+  PGPASSWORD: 5:q)m9bK/^EQG_uV
 jobs:
   # This workflow contains a single job called "build"
   build:
