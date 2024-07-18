@@ -15,6 +15,10 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 env:
+  PGHOST: 10.17.252.30
+  PGUSER: postgres
+  PGDATABASE: questbrand
+  PGPORT: 5432
   POSTGRES_PASSWORD: 5:q)m9bK/^EQG_uV
 jobs:
   # This workflow contains a single job called "build"
@@ -31,7 +35,7 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
       - run: echo ${pass}
-      - run: psql postgresql://postgres:$POSTGRES_PASSWORD@10.17.252.30:5432/questbrand -c 'select count(*) from information_schema.tables;' >> workflowoutput.txt
+      - run: psql -c 'select count(*) from information_schema.tables;' >> workflowoutput.txt
       - run: cat workflowoutput.txt
 
       # Runs a set of commands using the runners shell
